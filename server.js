@@ -1431,20 +1431,32 @@ const initializeServices = async () => {
     }
 };
 
+// Root route
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'Car Rental API is running',
+        version: '1.0.0',
+        endpoints: {
+            health: '/health',
+            api: '/api',
+            status: '/api/status'
+        }
+    });
+});
+
 // Use global error handler
 app.use(errorHandler);
 
 // Handle 404 routes
 app.use('*', (req, res) => {
     console.warn(`[404] Route not found: ${req.method} ${req.originalUrl}`);
-    console.warn(`[404] Decoded URL: ${decodeURIComponent(req.originalUrl)}`);
-    console.warn(`[404] Headers:`, req.headers);
     res.status(404).json({
         success: false,
-        message: 'Route not found',
-        errorCode: 'ROUTE_NOT_FOUND',
-        requestedUrl: req.originalUrl,
-        method: req.method
+        error: 'Route not found',
+        message: `The requested endpoint '${req.originalUrl}' does not exist`,
+        statusCode: 404,
+        timestamp: new Date().toISOString()
     });
 });
 
