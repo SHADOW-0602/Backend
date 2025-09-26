@@ -1,0 +1,12 @@
+driver_001,28.6139,77.209,Connaught Place Delhi,sedan,available,2025-01-15T05:00:00.000Z
+driver_002,28.6289,77.2184,Karol Bagh Delhi,hatchback,available,2025-01-15T05:01:00.000Z
+driver_003,28.6562,77.241,India Gate Delhi,suv,busy,2025-01-15T05:02:00.000Z
+driver_004,28.64,77.22,Rajouri Garden Delhi,sedan,available,2025-01-15T05:03:00.000Z
+driver_005,28.5355,77.391,Noida Sector 18,hatchback,available,2025-01-15T05:04:00.000Z
+driver_006,28.4595,77.0266,Gurgaon Cyber City,suv,available,2025-01-15T05:05:00.000Z
+driver_007,28.6692,77.4538,Laxmi Nagar Delhi,sedan,available,2025-01-15T05:06:00.000Z
+driver_008,28.7041,77.1025,Rohini Delhi,hatchback,offline,2025-01-15T05:07:00.000Z
+68a9a73a1fa4097c099a8ea8,28.638200859648116,77.37001600599248,Unknown Location,sedan,available,2025-08-31T03:12:17.840Z
+68b3c9931da3f57e3cdaad2e,28.638111914916756,77.36995997506902,Current Location,sedan,available,2025-09-13T15:44:41.345Z
+68d0141583127e0505745559,28.63805927771889,77.37000219833428,Current Location,sedan,available,2025-09-26T15:13:14.661Z
+68d6bda0aa33cbb8570d445f,28.638096040153627,77.37002545058421,Current Location,sedan,available,2025-09-26T16:29:32.092Z

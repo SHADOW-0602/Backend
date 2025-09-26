@@ -1,0 +1,7 @@
+zone_001,Central Delhi,28.6139,77.2090,5.0
+zone_002,South Delhi,28.5355,77.2493,7.5
+zone_003,North Delhi,28.7041,77.1025,6.0
+zone_004,East Delhi,28.6692,77.4538,5.5
+zone_005,West Delhi,28.6519,77.1132,6.5
+zone_006,Noida,28.5355,77.3910,8.0
+zone_007,Gurgaon,28.4595,77.0266,10.0
