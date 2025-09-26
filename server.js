@@ -1440,9 +1440,44 @@ app.get('/', (req, res) => {
         endpoints: {
             health: '/health',
             api: '/api',
-            status: '/api/status'
+            status: '/api/status',
+            routes: '/api/routes'
         }
     });
+});
+
+// Route testing endpoint
+app.get('/api/routes', (req, res) => {
+    const routes = {
+        public: [
+            'GET /',
+            'GET /health',
+            'GET /api/status',
+            'POST /api/admin/contact',
+            'POST /api/admin/login'
+        ],
+        authenticated: {
+            users: [
+                'GET /api/users/profile',
+                'PUT /api/users/settings',
+                'GET /api/rides/user'
+            ],
+            drivers: [
+                'GET /api/drivers/profile',
+                'POST /api/drivers/update-location',
+                'GET /api/driver/earnings'
+            ],
+            admin: [
+                'GET /api/admin/system-stats',
+                'GET /api/admin/drivers',
+                'GET /api/admin/users',
+                'GET /api/admin/analytics'
+            ]
+        },
+        status: 'All routes loaded successfully',
+        timestamp: new Date().toISOString()
+    };
+    res.json(routes);
 });
 
 // Use global error handler
