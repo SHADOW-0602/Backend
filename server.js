@@ -765,6 +765,27 @@ app.get('/api/admin/analytics', auth, role(['admin']), async (req, res) => {
 app.use('/api/admin', adminRoutes);
 app.use('/api/gift-cards', require('./routes/giftCardRoutes'));
 
+// Health check endpoint for Vercel
+app.get('/health', asyncHandler(async (req, res) => {
+    const dbStatus = getConnectionStatus();
+    const healthData = {
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        database: dbStatus,
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        environment: process.env.NODE_ENV || 'development',
+        version: process.env.npm_package_version || '1.0.0'
+    };
+    
+    if (!isConnected()) {
+        healthData.status = 'degraded';
+        healthData.warnings = ['Database not connected'];
+    }
+    
+    res.json(healthData);
+}));
+
 // Middleware to update driver lastActive timestamp
 app.use(['/api/drivers/*', '/api/rides/*'], auth, async (req, res, next) => {
   if (req.user && req.user.role === 'driver') {
@@ -1494,28 +1515,6 @@ app.use('*', (req, res) => {
         timestamp: new Date().toISOString()
     });
 });
-
-// Health check endpoint for Vercel
-app.get('/health', asyncHandler(async (req, res) => {
-    const dbStatus = getConnectionStatus();
-    const healthData = {
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        database: dbStatus,
-        uptime: process.uptime(),
-        memory: process.memoryUsage(),
-        environment: process.env.NODE_ENV || 'development',
-        version: process.env.npm_package_version || '1.0.0'
-    };
-    
-    // Check if database is connected
-    if (!isConnected()) {
-        healthData.status = 'degraded';
-        healthData.warnings = ['Database not connected'];
-    }
-    
-    res.json(healthData);
-}));
 
 // API status endpoint
 app.get('/api/status', asyncHandler(async (req, res) => {
