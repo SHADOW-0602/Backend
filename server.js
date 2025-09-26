@@ -259,21 +259,20 @@ app.post('/api/admin/login', async (req, res) => {
 });
 
 // API Routes
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/drivers', require('./routes/driverRoutes'));
-app.use('/api/driver', require('./routes/driverRoutes'));
+app.use('/api/users', userRoutes);
+app.use('/api/drivers', driverRoutes);
+app.use('/api/driver', driverRoutes);
 app.use('/api/vehicles', require('./routes/vehicleRoutes'));
-app.use('/api/rides', require('./routes/rideRoutes'));
-app.use('/api/payments', require('./routes/paymentRoutes'));
-app.use('/api/notifications', require('./routes/notificationRoutes'));
-app.use('/api/chat', require('./routes/chatRoutes'));
-app.use('/api/invoices', require('./routes/invoiceRoutes'));
-
-app.use('/api/setup', require('./routes/setupRoutes'));
-app.use('/api/security', require('./routes/securityRoutes'));
-app.use('/api/support', require('./routes/supportRoutes'));
-app.use('/api/location', require('./routes/locationRoutes'));
-app.use('/api/analytics', require('./routes/analytics'));
+app.use('/api/rides', rideRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/api/setup', setupRoutes);
+app.use('/api/security', securityRoutes);
+app.use('/api/support', supportRoutes);
+app.use('/api/location', locationRoutes);
+app.use('/api/analytics', analyticsRoutes);
 app.use('/api/debug', require('./routes/debugRoutes'));
 app.use('/api/ratings', require('./routes/ratings'));
 
@@ -764,23 +763,7 @@ app.get('/api/admin/analytics', auth, role(['admin']), async (req, res) => {
 
 // Mount additional route modules
 app.use('/api/admin', adminRoutes);
-
-app.use('/api/locations', locationRoutes);
-app.use('/api/chats', chatRoutes);
-app.use('/api/support', supportRoutes);
-app.use('/api/security', securityRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/setup', setupRoutes);
 app.use('/api/gift-cards', require('./routes/giftCardRoutes'));
-
-// Gift card routes
-try {
-  const giftCardRoutes = require('./routes/giftCardRoutes');
-  app.use('/api/gift-cards', giftCardRoutes);
-  console.log('✅ Gift card routes loaded');
-} catch (error) {
-  console.error('❌ Gift card routes error:', error.message);
-}
 
 // Middleware to update driver lastActive timestamp
 app.use(['/api/drivers/*', '/api/rides/*'], auth, async (req, res, next) => {
