@@ -786,6 +786,26 @@ app.get('/health', asyncHandler(async (req, res) => {
     res.json(healthData);
 }));
 
+// Database connection test
+app.get('/api/db-test', asyncHandler(async (req, res) => {
+    try {
+        await connectToDatabase();
+        const dbStatus = getConnectionStatus();
+        res.json({
+            success: true,
+            database: dbStatus,
+            mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not set',
+            connected: isConnected()
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message,
+            mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not set'
+        });
+    }
+}));
+
 // Middleware to update driver lastActive timestamp
 app.use(['/api/drivers/*', '/api/rides/*'], auth, async (req, res, next) => {
   if (req.user && req.user.role === 'driver') {
