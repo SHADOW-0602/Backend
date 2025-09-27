@@ -35,21 +35,18 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ?
     process.env.ALLOWED_ORIGINS.split(',') : 
     ['http://localhost:3000', 'http://localhost:3001', 'https://front-end-tau-virid-98.vercel.app'];
 
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
-        res.header('Access-Control-Allow-Origin', origin || '*');
-    }
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    
-    if (req.method === 'OPTIONS') {
-        res.sendStatus(200);
-    } else {
-        next();
-    }
-});
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
 
 // Body parsing with size limits
 app.use(express.json({ limit: '1mb' }));
@@ -795,13 +792,16 @@ app.get('/api/db-test', asyncHandler(async (req, res) => {
             success: true,
             database: dbStatus,
             mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not set',
-            connected: isConnected()
+            connected: isConnected(),
+            uriFormat: process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 20) + '...' : 'Not set'
         });
     } catch (error) {
         res.status(500).json({
             success: false,
             error: error.message,
-            mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not set'
+            errorCode: error.code,
+            mongoUri: process.env.MONGODB_URI ? 'Set' : 'Not set',
+            uriFormat: process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 20) + '...' : 'Not set'
         });
     }
 }));
