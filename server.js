@@ -33,7 +33,7 @@ app.use(enableCompression());
 // CORS middleware with environment-based origins
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? 
     process.env.ALLOWED_ORIGINS.split(',') : 
-    ['http://localhost:3000', 'http://localhost:3001'];
+    ['http://localhost:3000', 'http://localhost:3001', 'https://front-end-tau-virid-98.vercel.app'];
 
 app.use((req, res, next) => {
     const origin = req.headers.origin;
