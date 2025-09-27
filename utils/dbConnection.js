@@ -17,15 +17,12 @@ const connectToDatabase = async () => {
     try {
         // Optimized connection options for serverless
         const connectionOptions = {
-            maxPoolSize: 10, // Maximum number of connections
-            serverSelectionTimeoutMS: 5000, // How long to try selecting a server
-            socketTimeoutMS: 45000, // How long a send or receive on a socket can take
-            bufferCommands: false, // Disable mongoose buffering
-            bufferMaxEntries: 0, // Disable mongoose buffering
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
-            heartbeatFrequencyMS: 10000, // Heartbeat every 10 seconds
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            bufferCommands: false,
+            maxIdleTimeMS: 30000,
+            heartbeatFrequencyMS: 10000
         };
 
         console.log('🔌 Connecting to MongoDB...');
